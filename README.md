@@ -59,12 +59,24 @@ Esp32 2WD Car with Bluetooth Remote Control is an project that can avoid obstacl
 ## Circuit Diagram
 <table>
   <tr valign="middle">
-    <td>
+    <td halign="center">
       <img src="./assets/draft.jpeg" alt="circuite_idea" height="450">
     </td>
-    <td>
+    <td halign="center">
       <img src="./assets/circuite_idea.png" alt="circuite_idea" height="450">
     </td>
+  </tr>
+</table>
+
+<table>
+  <tr valign="middle">
+    <td halign="center">
+      <img src="./assets/diagram_circuit.png" alt="diagram_circuite" height="450">
+      <div>
+        <a href="https://app.cirkitdesigner.com/project/4d7fd9ed-47f0-43c8-8ef2-58eadbf371e6">circuit scheme link</a>
+      </div>
+    </td>
+     
   </tr>
 </table>
 
@@ -79,22 +91,10 @@ Right → ‘Right’
 
   - Features Action:
 B button → 'B'
-A button → 'A'
-L1 button → 'L1'
-R1 button → 'R1'
 
-- To move forward the In1 and In3 gets HIGH and In2 and In4 gets LOW. and we send the PWM value to both ENA and ENB pins. So, all motors run forward according to the value from PWM.
-  
-- To move Backward the In1 and In3 gets LOW and In2 and In4 gets HIGH. We send the PWM value to both ENA and ENB pins. So, all motors run Backward according to the value from PWM.
-  
-- To move Left the In1 and In4 gets LOW and In2 and In3 gets HIGH. As a result the left runs backwards and the right motors run forward and the car turns left.
-
-- To move Right the In1 and In4 gets HIGH and In2 and In3 gets LOW. As a result the right motors run backwards and the left motors run forward and the car turns right.
 
 - Pressed the B Button, stop the car.
-- Pressed the A Button, turn on/off the Led.
-- Pressed the L1 Button, back left the car.
-- Pressed the R1 Button, back right the car.
+
 
 
 
@@ -106,7 +106,3 @@ R1 button → 'R1'
 
 
 ## Pictures and Videos
-
-<img src="assets/IMG_3974.jpeg" alt="img-1" height="350">
-<img src="assets/IMG_3975.jpeg" alt="img-2" height="350">
-<img src="assets/IMG_3983.jpeg" alt="img-3" height="350">
