@@ -104,7 +104,7 @@ B button → 'B'
 2. After it, follow this [steps](https://www.waveshare.com/wiki/ESP32-S3-Zero#Arduino). Install those libraries on arduino for esp32 and bluetooth controller, in this followint list
  - https://raw.githubusercontent.com/ricardoquesada/esp32-arduino-lib-builder/master/bluepad32_files/package_esp32_bluepad32_index.json
  - https://espressif.github.io/arduino-esp32/package_esp32_index.json
-3. If you want test the RGB Led, please add the 
+3. If you want test the RGB Led, please add the library "[Adafruit_NeoPXL8](https://github.com/adafruit/Adafruit_NeoPXL8)", you find in the library. In the case use, in the folder "code", choose the file named "test_RGB_led.ino"
 3. In the end, yuo can retrieve the my code and setup the number of pin and command from your BL remote control.
 
 
