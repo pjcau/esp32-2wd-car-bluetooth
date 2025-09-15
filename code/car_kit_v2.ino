@@ -156,8 +156,6 @@ void loop(){
   ControllerPtr ctl = myControllers[0];
   if(ctl != nullptr){
 
-     float dis = calDistance();
-     Serial.println(dis); 
     
       if(ctl->b()){  // stop all
         motorA.motorBrake();  

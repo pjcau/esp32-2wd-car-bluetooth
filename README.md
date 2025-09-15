@@ -4,7 +4,7 @@ Esp32 2WD Car with Bluetooth Remote Control is an project that can avoid obstacl
 
 ## Components Details  
 
-- **ESP32C3**: For development purposes, we use this board.  
+- **[ESP32C3](https://www.waveshare.com/wiki/ESP32-S3-Zero)**: For development purposes, we use this board.  
 
 - **MINI L298N(MX1508) Motor Driver**: It controlled the motors with Bridge H circuit. 
 
@@ -101,7 +101,10 @@ B button → 'B'
 ## Following Software Steps
 
 1. Download the [Arduino Ide](https://www.arduino.cc/en/software/) and begin to write a simple code to learn how turn on/off a simple build led inside the esp32. You can compile and upload the binary on esp32.
-2. [Look this page and video](https://www.arduino.cc/en/software/). Install the [library](https://raw.githubusercontent.com/ricardoquesada/esp32-arduino-lib-builder/master/bluepad32_files/package_esp32_bluepad32_index.json) and install like in the video on your arduino Ide
+2. After it, follow this [steps](https://www.waveshare.com/wiki/ESP32-S3-Zero#Arduino). Install those libraries on arduino for esp32 and bluetooth controller, in this followint list
+ - https://raw.githubusercontent.com/ricardoquesada/esp32-arduino-lib-builder/master/bluepad32_files/package_esp32_bluepad32_index.json
+ - https://espressif.github.io/arduino-esp32/package_esp32_index.json
+3. If you want test the RGB Led, please add the 
 3. In the end, yuo can retrieve the my code and setup the number of pin and command from your BL remote control.
 
 
