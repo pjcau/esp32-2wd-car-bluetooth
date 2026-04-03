@@ -10,11 +10,13 @@ Esp32 2WD Car with Bluetooth Remote Control is an project that can avoid obstacl
 
 - **Switch ON/OFF** It is used for turn on/off the power on circuit.
 
-- **DC-DC SteUp Boost Module**: You can use a TP4056 Kit to reach this result.
+- **HX-2S-A10 BMS**: Battery Management System for 2S lithium batteries in series. It protects the cells from overcharge, over-discharge and short circuit.
+
+- **DC-DC Buck Step-Down Module (8.4V to 5V)**: It converts the 8.4V output from the 2S battery pack down to 5V to safely power the ESP32 and other logic components.
   
 - **Bluetooth GamePad**: It's used to remote command the car.
 
-- **2 18650 Battery (Rechargeable)**: It is used for providing voltage the circuit. Please put those in series. We aspect around 8.4 V.
+- **2x 18650 Battery (Rechargeable)**: Connected in series through the HX-2S-A10 BMS, providing approximately 8.4V (fully charged). The BMS handles balancing and protection, then a buck step-down module regulates the voltage to 5V for the logic components.
   
 - **Jumper Wires**: Male-to-male and male-to-female connectors for the circuit (any normal wires can be used, though male-to-female connectors are necessary for connecting with esp).
 
@@ -44,7 +46,7 @@ Esp32 2WD Car with Bluetooth Remote Control is an project that can avoid obstacl
 
 3. And repeated the process for the right motors and connected them to "out3" and "out4" of the motor driver.
 
-4. After that we connected the battery with the motor driver. Positive terminal to 12V marked port. We marged the ground of the battery with the ESP32 ground connector to and connected it with the GND marked port. Lastly we connected the 5v from our ESP32 with the 5V maked port beside the GND of the driver so that the ESP32 board can take power from the motor driver.
+4. After that we connected the two 18650 batteries in series through the HX-2S-A10 BMS (output ~8.4V). The BMS output goes to the motor driver positive terminal (12V marked port) to power the motors directly. We also connected the BMS output to a DC-DC buck step-down module that converts 8.4V to 5V. The 5V output from the buck module powers the ESP32 and other logic components. All grounds (battery/BMS, buck module, motor driver, ESP32) are connected together.
 
 5. We connected the ENA, IN1, IN2, IN3, IN4, ENB ports with the ESP32's D32, D26, D27, D13, D12 & D33 no pin respectively.
 
@@ -57,26 +59,65 @@ Esp32 2WD Car with Bluetooth Remote Control is an project that can avoid obstacl
 
 
 ## Circuit Diagram
-<table>
-  <tr valign="middle">
-    <td halign="center">
-      <img src="./assets/draft.jpeg" alt="circuite_idea" height="450">
-    </td>
-    <td halign="center">
-      <img src="./assets/circuite_idea.png" alt="circuite_idea" height="450">
-    </td>
-  </tr>
-</table>
+
+```mermaid
+flowchart TD
+    BAT["2x 18650 Batteries in Series\n~7.4V - max 8.4V fully charged"]
+    BMS["HX-2S-A10 BMS\nB+ / B- to Batteries\nOUT+ / OUT- ~8.4V"]
+    SW["Switch ON/OFF"]
+
+    subgraph POWER_8V ["8.4V Power Rail"]
+        MOTOR_DRV["MX1508 Motor Driver\nH-Bridge\nVCC: 8.4V"]
+    end
+
+    subgraph POWER_5V ["5V Power Rail"]
+        BUCK["DC-DC Buck Step-Down\nIN: 8.4V - OUT: 5V"]
+        ESP["ESP32-C3\nWaveshare S3-Zero\n5V/VIN"]
+    end
+
+    MOTOR_L["Left Motor\nOUT1 / OUT2"]
+    MOTOR_R["Right Motor\nOUT3 / OUT4"]
+
+    BAT -->|"B+ / B-"| BMS
+    BMS -->|"OUT+ / OUT-"| SW
+    SW -->|"8.4V"| MOTOR_DRV
+    SW -->|"8.4V"| BUCK
+    BUCK -->|"5V"| ESP
+
+    ESP -->|"GPIO 26/27\nPWM CH0/CH1"| MOTOR_DRV
+    ESP -->|"GPIO 13/12\nPWM CH2/CH3"| MOTOR_DRV
+
+    MOTOR_DRV --> MOTOR_L
+    MOTOR_DRV --> MOTOR_R
+
+    style BAT fill:#f9f,stroke:#333
+    style BMS fill:#ffa,stroke:#333
+    style BUCK fill:#aff,stroke:#333
+    style ESP fill:#adf,stroke:#333
+    style MOTOR_DRV fill:#fda,stroke:#333
+    style MOTOR_L fill:#ddd,stroke:#333
+    style MOTOR_R fill:#ddd,stroke:#333
+    style POWER_8V fill:#fff3e0,stroke:#e65100
+    style POWER_5V fill:#e3f2fd,stroke:#1565c0
+```
+
+> **Note:** GND is shared between all components (BMS, Buck Step-Down, MX1508, ESP32-C3).
+>
+> | ESP32 GPIO | MX1508 Pin | Function |
+> |---|---|---|
+> | GPIO 26 | IN1 | Left Motor Forward |
+> | GPIO 27 | IN2 | Left Motor Backward |
+> | GPIO 13 | IN3 | Right Motor Forward |
+> | GPIO 12 | IN4 | Right Motor Backward |
 
 <table>
   <tr valign="middle">
     <td halign="center">
-      <img src="./assets/diagram_circuit.png" alt="diagram_circuite" height="450">
+      <img src="./assets/circuit_image.png" alt="circuit_diagram" height="450">
       <div>
         <a href="https://app.cirkitdesigner.com/project/4d7fd9ed-47f0-43c8-8ef2-58eadbf371e6">circuit scheme link</a>
       </div>
     </td>
-     
   </tr>
 </table>
 
@@ -100,12 +141,47 @@ B button → 'B'
 
 ## Following Software Steps
 
-1. Download the [Arduino Ide](https://www.arduino.cc/en/software/) and begin to write a simple code to learn how turn on/off a simple build led inside the esp32. You can compile and upload the binary on esp32.
-2. After it, follow this [steps](https://www.waveshare.com/wiki/ESP32-S3-Zero#Arduino). Install those libraries on arduino for esp32 and bluetooth controller, in this followint list
- - https://raw.githubusercontent.com/ricardoquesada/esp32-arduino-lib-builder/master/bluepad32_files/package_esp32_bluepad32_index.json
- - https://espressif.github.io/arduino-esp32/package_esp32_index.json
-3. If you want test the RGB Led, please add the library "[Adafruit_NeoPXL8](https://github.com/adafruit/Adafruit_NeoPXL8)", you find in the library. In the case use, in the folder "code", choose the file named "test_RGB_led.ino"
-3. In the end, yuo can retrieve the my code and setup the number of pin and command from your BL remote control.
+### Windows / macOS
+
+1. Download the [Arduino IDE](https://www.arduino.cc/en/software/) and begin to write a simple code to learn how to turn on/off a simple built-in LED inside the ESP32. You can compile and upload the binary on ESP32.
+2. After it, follow these [steps](https://www.waveshare.com/wiki/ESP32-S3-Zero#Arduino). Install those libraries on Arduino for ESP32 and Bluetooth controller, in the following list:
+   - https://raw.githubusercontent.com/ricardoquesada/esp32-arduino-lib-builder/master/bluepad32_files/package_esp32_bluepad32_index.json
+   - https://espressif.github.io/arduino-esp32/package_esp32_index.json
+3. If you want to test the RGB LED, please add the library "[Adafruit_NeoPXL8](https://github.com/adafruit/Adafruit_NeoPXL8)" from the Library Manager. In that case, in the folder "code", choose the file named "test_RGB_led.ino".
+4. In the end, you can retrieve the code and setup the pin numbers and commands from your BL remote control.
+
+### Linux (Ubuntu/Debian)
+
+1. Install the Arduino IDE via terminal:
+   ```bash
+   sudo apt update
+   sudo apt install -y arduino
+   ```
+   Alternatively, download the latest [Arduino IDE AppImage](https://www.arduino.cc/en/software/) and run it directly:
+   ```bash
+   chmod +x arduino-ide_*_Linux_64bit.AppImage
+   ./arduino-ide_*_Linux_64bit.AppImage
+   ```
+
+2. Add your user to the `dialout` group so you can access the serial port without `sudo`:
+   ```bash
+   sudo usermod -aG dialout $USER
+   ```
+   **Log out and log back in** for the group change to take effect.
+
+3. Install the ESP32 and Bluepad32 board packages. Open Arduino IDE, go to **File → Preferences → Additional Board Manager URLs** and add these URLs (comma-separated):
+   - `https://raw.githubusercontent.com/ricardoquesada/esp32-arduino-lib-builder/master/bluepad32_files/package_esp32_bluepad32_index.json`
+   - `https://espressif.github.io/arduino-esp32/package_esp32_index.json`
+
+   Then go to **Tools → Board → Boards Manager**, search for "esp32" and install it.
+
+4. If you want to test the RGB LED, add the library "[Adafruit_NeoPXL8](https://github.com/adafruit/Adafruit_NeoPXL8)" from **Sketch → Include Library → Manage Libraries**. Then use the file "test_RGB_led.ino" in the "code" folder.
+
+5. Connect the ESP32 via USB. Check the port with:
+   ```bash
+   ls /dev/ttyUSB* /dev/ttyACM*
+   ```
+   Select the correct port in **Tools → Port**, then compile and upload.
 
 
 ## Pictures and Videos
