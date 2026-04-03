@@ -7,7 +7,7 @@
 
   <!-- Background -->
   <rect width="1000" height="620" fill="#f8f9fa" rx="8"/>
-  <text x="500" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">Circuit Diagram with Flyback Diodes</text>
+  <text x="500" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">Circuit Diagram with Flyback + Schottky Diodes</text>
 
   <!-- ========== BATTERIES ========== -->
   <rect x="780" y="60" width="180" height="100" rx="8" fill="#e8d5f5" stroke="#7b1fa2" stroke-width="2"/>
@@ -53,9 +53,30 @@
   <text x="720" y="467" text-anchor="middle" font-size="9" fill="#555">8.4V → 5V Step-Down</text>
   <text x="720" y="480" text-anchor="middle" font-size="9" fill="#1565c0">OUT: 5V</text>
 
-  <!-- Buck to ESP32 -->
-  <line x1="640" y1="458" x2="530" y2="458" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowhead)"/>
-  <text x="585" y="450" text-anchor="middle" font-size="9" font-weight="bold" fill="#1565c0">5V</text>
+  <!-- Buck to Schottky Diode -->
+  <line x1="640" y1="458" x2="595" y2="458" stroke="#1565c0" stroke-width="2"/>
+  <text x="620" y="450" text-anchor="middle" font-size="8" font-weight="bold" fill="#1565c0">5V</text>
+
+  <!-- ========== SCHOTTKY DIODE ========== -->
+  <rect x="545" y="445" width="50" height="26" rx="4" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <!-- Diode symbol -->
+  <polygon points="558,451 570,458 558,465" fill="#2e7d32" stroke="#2e7d32" stroke-width="1"/>
+  <line x1="570" y1="451" x2="570" y2="465" stroke="#2e7d32" stroke-width="2"/>
+  <text x="570" y="440" text-anchor="middle" font-size="8" font-weight="bold" fill="#2e7d32">1N5817</text>
+  <text x="548" y="440" font-size="6" fill="#2e7d32">A</text>
+  <text x="590" y="440" font-size="6" fill="#2e7d32">K</text>
+
+  <!-- Schottky to ESP32 -->
+  <line x1="545" y1="458" x2="530" y2="458" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="537" y="450" text-anchor="middle" font-size="8" fill="#2e7d32">~4.7V</text>
+
+  <!-- ========== USB (optional debug) ========== -->
+  <rect x="340" y="530" width="140" height="40" rx="6" fill="#e1bee7" stroke="#8e24aa" stroke-width="1.5" stroke-dasharray="4"/>
+  <text x="410" y="550" text-anchor="middle" font-size="10" font-weight="bold" fill="#8e24aa">USB Cable (PC/Mac)</text>
+  <text x="410" y="562" text-anchor="middle" font-size="8" fill="#8e24aa">Data + 5V for firmware/debug</text>
+  <!-- USB to ESP32 -->
+  <line x1="410" y1="530" x2="410" y2="500" stroke="#8e24aa" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrowhead)"/>
+  <text x="425" y="518" font-size="7" fill="#8e24aa">USB 5V + D+/D-</text>
 
   <!-- ========== ESP32 ========== -->
   <rect x="340" y="420" width="190" height="80" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="2"/>
@@ -170,7 +191,7 @@
   <g transform="translate(870,570)"><line x1="-8" y1="0" x2="8" y2="0" stroke="#333" stroke-width="2"/><line x1="-5" y1="4" x2="5" y2="4" stroke="#333" stroke-width="2"/><line x1="-2" y1="8" x2="8" y2="8" stroke="#333" stroke-width="2"/></g>
 
   <!-- ========== LEGEND ========== -->
-  <rect x="30" y="50" width="250" height="80" rx="6" fill="white" stroke="#ccc" stroke-width="1"/>
+  <rect x="30" y="50" width="280" height="105" rx="6" fill="white" stroke="#ccc" stroke-width="1"/>
   <text x="45" y="70" font-size="10" font-weight="bold" fill="#333">Legend:</text>
   <line x1="45" y1="82" x2="75" y2="82" stroke="#e65100" stroke-width="2.5"/>
   <text x="80" y="86" font-size="9" fill="#555">8.4V Power Rail (motors)</text>
@@ -179,5 +200,9 @@
   <line x1="45" y1="112" x2="75" y2="112" stroke="#2e7d32" stroke-width="1.5"/>
   <text x="80" y="116" font-size="9" fill="#555">PWM Signal (ESP32 → MX1508)</text>
   <rect x="45" y="120" width="30" height="4" rx="2" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
-  <text x="80" y="127" font-size="9" fill="#c62828">Flyback Diode (1N4007) — NEW</text>
+  <text x="80" y="127" font-size="9" fill="#c62828">Flyback Diode (1N4007)</text>
+  <rect x="45" y="135" width="30" height="4" rx="2" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="80" y="142" font-size="9" fill="#2e7d32">Schottky Diode (1N5817) — USB protection</text>
+  <line x1="45" y1="150" x2="75" y2="150" stroke="#8e24aa" stroke-width="1.5" stroke-dasharray="4"/>
+  <text x="80" y="154" font-size="9" fill="#8e24aa">USB connection (optional debug)</text>
 </svg>

@@ -27,6 +27,8 @@ Esp32 2WD Car with Bluetooth Remote Control is an project that can avoid obstacl
 
 - **2x 1N4007 Flyback Diodes**: One per motor, soldered in parallel (reverse-biased) across the motor terminals. They protect the MX1508 and the ESP32 from back-EMF voltage spikes generated when the motors brake or reverse direction.
 
+- **1x 1N5817 Schottky Diode**: Placed between the buck converter 5V output and the ESP32 5V/VIN pin (anode to buck, cathode to ESP32). It prevents the battery power from backfeeding into the USB port of your computer when both USB and battery are connected at the same time. This allows safe firmware upload and serial monitoring while the car is powered on.
+
 ## Following Hardware Steps
 
 1. I had an old toy car. We connected them using the screw provided with the chassis. Glue gun can be used to attach the motors to the base.
@@ -60,6 +62,14 @@ Esp32 2WD Car with Bluetooth Remote Control is an project that can avoid obstacl
 
 9. Solder a **1N4007 flyback diode** in parallel across each motor terminals (reverse-biased: cathode/band side to the positive terminal, anode to the negative terminal). The MX1508 does not have built-in flyback diodes, so these protect the driver and the ESP32 from voltage spikes caused by back-EMF when the motors stop or change direction.
 
+10. Solder a **1N5817 Schottky diode** on the 5V line between the buck converter output and the ESP32 5V/VIN pin (anode → buck OUT+, cathode/band → ESP32 VIN). This diode isolates the battery power rail from the USB port, so you can safely connect the USB cable for firmware upload or serial debugging while the car is powered on by the batteries. Without this diode, connecting USB and battery at the same time could send current back into your computer's USB port and damage it.
+
+> | Scenario | Batteries | USB | Motors | Serial Monitor |
+> |---|---|---|---|---|
+> | Firmware upload | OFF | Connected | No | Yes |
+> | Debug with motors | **ON** | Connected | **Yes** | **Yes** |
+> | Normal operation | ON | Disconnected | Yes | No |
+
 
 ## Circuit Diagram
 
@@ -75,8 +85,11 @@ flowchart TD
 
     subgraph POWER_5V ["5V Power Rail"]
         BUCK["DC-DC Buck Step-Down\nIN: 8.4V - OUT: 5V"]
+        SCHOTTKY["1N5817 Schottky Diode\nAnode→Buck / Cathode→ESP32\nPrevents USB backfeed"]
         ESP["ESP32-C3\nWaveshare S3-Zero\n5V/VIN"]
     end
+
+    USB["USB Cable\nData + 5V from PC"]
 
     subgraph FRONT_MOTOR ["Front Motor Group"]
         MOTOR_F["Front Motor\nOUT1 / OUT2"]
@@ -92,7 +105,9 @@ flowchart TD
     BMS -->|"OUT+ / OUT-"| SW
     SW -->|"8.4V"| MOTOR_DRV
     SW -->|"8.4V"| BUCK
-    BUCK -->|"5V"| ESP
+    BUCK -->|"5V"| SCHOTTKY
+    SCHOTTKY -->|"~4.7V"| ESP
+    USB -.->|"5V + Data\n(firmware/debug)"| ESP
 
     ESP -->|"GPIO 26/27\nPWM CH0/CH1"| MOTOR_DRV
     ESP -->|"GPIO 13/12\nPWM CH2/CH3"| MOTOR_DRV
@@ -113,6 +128,8 @@ flowchart TD
     style DIODE_F fill:#fcc,stroke:#c33
     style DIODE_R fill:#fcc,stroke:#c33
     style POWER_8V fill:#fff3e0,stroke:#e65100
+    style SCHOTTKY fill:#c8e6c9,stroke:#2e7d32
+    style USB fill:#e1bee7,stroke:#8e24aa,stroke-dasharray: 5
     style POWER_5V fill:#e3f2fd,stroke:#1565c0
     style FRONT_MOTOR fill:#f5f5f5,stroke:#666
     style REAR_MOTOR fill:#f5f5f5,stroke:#666
@@ -137,7 +154,7 @@ flowchart TD
     </td>
     <td halign="center">
       <img src="./assets/circuit_with_diodes.svg" alt="circuit_diagram_with_flyback_diodes" height="450">
-      <div>Circuit with flyback diodes (1N4007)</div>
+      <div>Circuit with flyback (1N4007) + Schottky (1N5817) diodes</div>
     </td>
   </tr>
 </table>
