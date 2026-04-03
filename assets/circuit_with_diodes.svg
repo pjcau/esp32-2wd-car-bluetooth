@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#333"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="620" fill="#f8f9fa" rx="8"/>
+  <text x="500" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">Circuit Diagram with Flyback Diodes</text>
+
+  <!-- ========== BATTERIES ========== -->
+  <rect x="780" y="60" width="180" height="100" rx="8" fill="#e8d5f5" stroke="#7b1fa2" stroke-width="2"/>
+  <text x="870" y="85" text-anchor="middle" font-size="12" font-weight="bold" fill="#7b1fa2">2x 18650 Li-Ion</text>
+  <rect x="800" y="95" width="140" height="22" rx="4" fill="#9c27b0" stroke="#6a1b9a" stroke-width="1"/>
+  <text x="870" y="110" text-anchor="middle" font-size="10" fill="white">18650  3.7V</text>
+  <rect x="800" y="122" width="140" height="22" rx="4" fill="#9c27b0" stroke="#6a1b9a" stroke-width="1"/>
+  <text x="870" y="137" text-anchor="middle" font-size="10" fill="white">18650  3.7V</text>
+  <text x="870" y="155" text-anchor="middle" font-size="9" fill="#555">Series: ~7.4V - 8.4V</text>
+
+  <!-- ========== BMS ========== -->
+  <rect x="780" y="200" width="180" height="60" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
+  <text x="870" y="225" text-anchor="middle" font-size="12" font-weight="bold" fill="#e65100">HX-2S-A10 BMS</text>
+  <text x="870" y="245" text-anchor="middle" font-size="9" fill="#555">Overcharge/Discharge Protection</text>
+
+  <!-- Battery to BMS -->
+  <line x1="870" y1="160" x2="870" y2="200" stroke="#c62828" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="880" y="183" font-size="8" fill="#c62828">B+ / B-</text>
+
+  <!-- ========== SWITCH ========== -->
+  <rect x="810" y="300" width="120" height="45" rx="6" fill="#e0e0e0" stroke="#616161" stroke-width="2"/>
+  <text x="870" y="320" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Switch ON/OFF</text>
+  <text x="870" y="335" text-anchor="middle" font-size="9" fill="#555">Main Power</text>
+
+  <!-- BMS to Switch -->
+  <line x1="870" y1="260" x2="870" y2="300" stroke="#c62828" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="880" y="283" font-size="8" fill="#c62828">OUT+ / OUT-</text>
+
+  <!-- ========== 8.4V RAIL (to MX1508) ========== -->
+  <!-- Switch to MX1508 -->
+  <line x1="810" y1="322" x2="580" y2="322" stroke="#e65100" stroke-width="2.5"/>
+  <line x1="580" y1="322" x2="580" y2="360" stroke="#e65100" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+  <text x="690" y="315" text-anchor="middle" font-size="9" font-weight="bold" fill="#e65100">8.4V to Motors</text>
+
+  <!-- ========== 5V RAIL (to Buck then ESP32) ========== -->
+  <!-- Switch to Buck -->
+  <line x1="810" y1="335" x2="710" y2="335" stroke="#1565c0" stroke-width="2"/>
+  <line x1="710" y1="335" x2="710" y2="430" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Buck Step-Down -->
+  <rect x="640" y="430" width="160" height="55" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="720" y="452" text-anchor="middle" font-size="11" font-weight="bold" fill="#1565c0">DC-DC Buck</text>
+  <text x="720" y="467" text-anchor="middle" font-size="9" fill="#555">8.4V → 5V Step-Down</text>
+  <text x="720" y="480" text-anchor="middle" font-size="9" fill="#1565c0">OUT: 5V</text>
+
+  <!-- Buck to ESP32 -->
+  <line x1="640" y1="458" x2="530" y2="458" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="585" y="450" text-anchor="middle" font-size="9" font-weight="bold" fill="#1565c0">5V</text>
+
+  <!-- ========== ESP32 ========== -->
+  <rect x="340" y="420" width="190" height="80" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="2"/>
+  <text x="435" y="445" text-anchor="middle" font-size="13" font-weight="bold" fill="#0d47a1">ESP32-C3</text>
+  <text x="435" y="460" text-anchor="middle" font-size="9" fill="#555">Waveshare S3-Zero</text>
+  <!-- GPIO labels -->
+  <text x="355" y="478" font-size="8" fill="#333">GPIO 26/27</text>
+  <text x="355" y="492" font-size="8" fill="#333">GPIO 13/12</text>
+  <text x="460" y="478" font-size="8" fill="#1565c0">5V/VIN</text>
+  <text x="460" y="492" font-size="8" fill="#333">GND</text>
+
+  <!-- ========== MX1508 MOTOR DRIVER ========== -->
+  <rect x="480" y="360" width="200" height="50" rx="6" fill="#ffe0b2" stroke="#e65100" stroke-width="2"/>
+  <text x="580" y="382" text-anchor="middle" font-size="12" font-weight="bold" fill="#bf360c">MX1508 Motor Driver</text>
+  <text x="580" y="397" text-anchor="middle" font-size="9" fill="#555">H-Bridge  |  VCC: 8.4V</text>
+
+  <!-- ESP32 to MX1508 (PWM signals) -->
+  <line x1="400" y1="420" x2="400" y2="395" stroke="#2e7d32" stroke-width="1.5"/>
+  <line x1="400" y1="395" x2="480" y2="395" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="430" y="390" font-size="7" fill="#2e7d32">GPIO 26/27 PWM</text>
+
+  <line x1="440" y1="420" x2="440" y2="405" stroke="#00695c" stroke-width="1.5"/>
+  <line x1="440" y1="405" x2="480" y2="405" stroke="#00695c" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="430" y="415" font-size="7" fill="#00695c">GPIO 13/12 PWM</text>
+
+  <!-- ========== FRONT MOTOR with DIODE ========== -->
+  <rect x="30" y="310" width="280" height="120" rx="8" fill="#f5f5f5" stroke="#666" stroke-width="1" stroke-dasharray="4"/>
+  <text x="170" y="330" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Front Motor Group</text>
+
+  <!-- Motor -->
+  <rect x="50" y="340" width="120" height="40" rx="6" fill="#e0e0e0" stroke="#424242" stroke-width="2"/>
+  <text x="110" y="358" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Front Motor</text>
+  <text x="110" y="372" text-anchor="middle" font-size="8" fill="#666">M1</text>
+  <!-- Motor terminals -->
+  <circle cx="55" cy="340" r="4" fill="#c62828"/>
+  <text x="55" y="336" text-anchor="middle" font-size="7" fill="#c62828">+</text>
+  <circle cx="165" cy="340" r="4" fill="#333"/>
+  <text x="165" y="336" text-anchor="middle" font-size="7" fill="#333">-</text>
+
+  <!-- Flyback Diode for Front Motor -->
+  <rect x="55" y="393" width="110" height="28" rx="4" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <!-- Diode symbol -->
+  <polygon points="85,400 100,407 85,414" fill="#c62828" stroke="#c62828" stroke-width="1"/>
+  <line x1="100" y1="400" x2="100" y2="414" stroke="#c62828" stroke-width="2"/>
+  <text x="125" y="411" font-size="8" font-weight="bold" fill="#c62828">1N4007</text>
+  <!-- Diode label -->
+  <text x="55" y="400" font-size="6" fill="#c62828">A</text>
+  <text x="152" y="400" font-size="6" fill="#c62828">K</text>
+
+  <!-- Wires connecting diode in parallel to motor -->
+  <line x1="55" y1="380" x2="55" y2="393" stroke="#c62828" stroke-width="1.5"/>
+  <line x1="165" y1="380" x2="165" y2="407" stroke="#333" stroke-width="1.5"/>
+  <line x1="165" y1="407" x2="155" y2="407" stroke="#333" stroke-width="1.5"/>
+  <line x1="55" y1="407" x2="65" y2="407" stroke="#c62828" stroke-width="1.5"/>
+
+  <!-- MX1508 to Front Motor -->
+  <line x1="480" y1="375" x2="350" y2="375" stroke="#e65100" stroke-width="2"/>
+  <line x1="350" y1="375" x2="350" y2="355" stroke="#e65100" stroke-width="2"/>
+  <line x1="350" y1="355" x2="170" y2="355" stroke="#e65100" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="380" y="370" font-size="8" fill="#e65100">OUT1/OUT2</text>
+
+  <!-- ========== REAR MOTOR with DIODE ========== -->
+  <rect x="30" y="140" width="280" height="120" rx="8" fill="#f5f5f5" stroke="#666" stroke-width="1" stroke-dasharray="4"/>
+  <text x="170" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Rear Motor Group</text>
+
+  <!-- Motor -->
+  <rect x="50" y="170" width="120" height="40" rx="6" fill="#e0e0e0" stroke="#424242" stroke-width="2"/>
+  <text x="110" y="188" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Rear Motor</text>
+  <text x="110" y="202" text-anchor="middle" font-size="8" fill="#666">M2</text>
+  <!-- Motor terminals -->
+  <circle cx="55" cy="170" r="4" fill="#c62828"/>
+  <text x="55" y="166" text-anchor="middle" font-size="7" fill="#c62828">+</text>
+  <circle cx="165" cy="170" r="4" fill="#333"/>
+  <text x="165" y="166" text-anchor="middle" font-size="7" fill="#333">-</text>
+
+  <!-- Flyback Diode for Rear Motor -->
+  <rect x="55" y="223" width="110" height="28" rx="4" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <!-- Diode symbol -->
+  <polygon points="85,230 100,237 85,244" fill="#c62828" stroke="#c62828" stroke-width="1"/>
+  <line x1="100" y1="230" x2="100" y2="244" stroke="#c62828" stroke-width="2"/>
+  <text x="125" y="241" font-size="8" font-weight="bold" fill="#c62828">1N4007</text>
+  <text x="55" y="230" font-size="6" fill="#c62828">A</text>
+  <text x="152" y="230" font-size="6" fill="#c62828">K</text>
+
+  <!-- Wires connecting diode in parallel to motor -->
+  <line x1="55" y1="210" x2="55" y2="223" stroke="#c62828" stroke-width="1.5"/>
+  <line x1="165" y1="210" x2="165" y2="237" stroke="#333" stroke-width="1.5"/>
+  <line x1="165" y1="237" x2="155" y2="237" stroke="#333" stroke-width="1.5"/>
+  <line x1="55" y1="237" x2="65" y2="237" stroke="#c62828" stroke-width="1.5"/>
+
+  <!-- MX1508 to Rear Motor -->
+  <line x1="480" y1="385" x2="320" y2="385" stroke="#e65100" stroke-width="2"/>
+  <line x1="320" y1="385" x2="320" y2="185" stroke="#e65100" stroke-width="2"/>
+  <line x1="320" y1="185" x2="170" y2="185" stroke="#e65100" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="330" y="280" font-size="8" fill="#e65100">OUT3/OUT4</text>
+
+  <!-- ========== GND BUS ========== -->
+  <line x1="50" y1="570" x2="950" y2="570" stroke="#333" stroke-width="3"/>
+  <text x="500" y="590" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">GND — Common Ground (all components)</text>
+  <!-- GND connections (dashed lines going down) -->
+  <line x1="110" y1="430" x2="110" y2="570" stroke="#333" stroke-width="1" stroke-dasharray="3"/>
+  <line x1="110" y1="260" x2="110" y2="265" stroke="#333" stroke-width="1" stroke-dasharray="3"/>
+  <line x1="435" y1="500" x2="435" y2="570" stroke="#333" stroke-width="1" stroke-dasharray="3"/>
+  <line x1="580" y1="410" x2="580" y2="570" stroke="#333" stroke-width="1" stroke-dasharray="3"/>
+  <line x1="720" y1="485" x2="720" y2="570" stroke="#333" stroke-width="1" stroke-dasharray="3"/>
+  <line x1="870" y1="345" x2="870" y2="570" stroke="#333" stroke-width="1" stroke-dasharray="3"/>
+  <!-- GND symbols -->
+  <g transform="translate(110,570)"><line x1="-8" y1="0" x2="8" y2="0" stroke="#333" stroke-width="2"/><line x1="-5" y1="4" x2="5" y2="4" stroke="#333" stroke-width="2"/><line x1="-2" y1="8" x2="2" y2="8" stroke="#333" stroke-width="2"/></g>
+  <g transform="translate(435,570)"><line x1="-8" y1="0" x2="8" y2="0" stroke="#333" stroke-width="2"/><line x1="-5" y1="4" x2="5" y2="4" stroke="#333" stroke-width="2"/><line x1="-2" y1="8" x2="2" y2="8" stroke="#333" stroke-width="2"/></g>
+  <g transform="translate(580,570)"><line x1="-8" y1="0" x2="8" y2="0" stroke="#333" stroke-width="2"/><line x1="-5" y1="4" x2="5" y2="4" stroke="#333" stroke-width="2"/><line x1="-2" y1="8" x2="2" y2="8" stroke="#333" stroke-width="2"/></g>
+  <g transform="translate(720,570)"><line x1="-8" y1="0" x2="8" y2="0" stroke="#333" stroke-width="2"/><line x1="-5" y1="4" x2="5" y2="4" stroke="#333" stroke-width="2"/><line x1="-2" y1="8" x2="2" y2="8" stroke="#333" stroke-width="2"/></g>
+  <g transform="translate(870,570)"><line x1="-8" y1="0" x2="8" y2="0" stroke="#333" stroke-width="2"/><line x1="-5" y1="4" x2="5" y2="4" stroke="#333" stroke-width="2"/><line x1="-2" y1="8" x2="8" y2="8" stroke="#333" stroke-width="2"/></g>
+
+  <!-- ========== LEGEND ========== -->
+  <rect x="30" y="50" width="250" height="80" rx="6" fill="white" stroke="#ccc" stroke-width="1"/>
+  <text x="45" y="70" font-size="10" font-weight="bold" fill="#333">Legend:</text>
+  <line x1="45" y1="82" x2="75" y2="82" stroke="#e65100" stroke-width="2.5"/>
+  <text x="80" y="86" font-size="9" fill="#555">8.4V Power Rail (motors)</text>
+  <line x1="45" y1="97" x2="75" y2="97" stroke="#1565c0" stroke-width="2"/>
+  <text x="80" y="101" font-size="9" fill="#555">5V Power Rail (logic)</text>
+  <line x1="45" y1="112" x2="75" y2="112" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="80" y="116" font-size="9" fill="#555">PWM Signal (ESP32 → MX1508)</text>
+  <rect x="45" y="120" width="30" height="4" rx="2" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="80" y="127" font-size="9" fill="#c62828">Flyback Diode (1N4007) — NEW</text>
+</svg>

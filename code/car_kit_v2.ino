@@ -1,13 +1,13 @@
 #include <Bluepad32.h>
 #include <ESP32MX1508.h>
 
-// Motor A (Left) pins
-#define LEFT_FWD  26
-#define LEFT_BWD  27
+// Motor A (Front) pins
+#define FRONT_FWD  26
+#define FRONT_BWD  27
 
-// Motor B (Right) pins
-#define RIGHT_FWD 13
-#define RIGHT_BWD 12
+// Motor B (Rear) pins
+#define REAR_FWD 13
+#define REAR_BWD 12
 
 // PWM channels (each pin needs its own channel)
 #define CH_LF 0
@@ -18,8 +18,8 @@
 #define RES 8      // Resolution: 8 bit (0-255)
 #define FREQ 5000  // PWM Frequency in Hz
 
-MX1508 motorLeft(LEFT_FWD, LEFT_BWD, CH_LF, CH_LB, RES, FREQ);
-MX1508 motorRight(RIGHT_FWD, RIGHT_BWD, CH_RF, CH_RB, RES, FREQ);
+MX1508 motorFront(FRONT_FWD, FRONT_BWD, CH_LF, CH_LB, RES, FREQ);
+MX1508 motorRear(REAR_FWD, REAR_BWD, CH_RF, CH_RB, RES, FREQ);
 
 int speed = 200;
 
@@ -54,28 +54,28 @@ void onDisconnectedController(ControllerPtr ctl) {
 }
 
 void stopAll() {
-    motorLeft.motorBrake();
-    motorRight.motorBrake();
+    motorFront.motorBrake();
+    motorRear.motorBrake();
 }
 
 void goForward(int spd) {
-    motorLeft.motorGo(spd);
-    motorRight.motorGo(spd);
+    motorFront.motorGo(spd);
+    motorRear.motorGo(spd);
 }
 
 void goBackward(int spd) {
-    motorLeft.motorRev(spd);
-    motorRight.motorRev(spd);
+    motorFront.motorRev(spd);
+    motorRear.motorRev(spd);
 }
 
 void turnLeft(int spd) {
-    motorLeft.motorRev(spd);
-    motorRight.motorGo(spd);
+    motorFront.motorRev(spd);
+    motorRear.motorGo(spd);
 }
 
 void turnRight(int spd) {
-    motorLeft.motorGo(spd);
-    motorRight.motorRev(spd);
+    motorFront.motorGo(spd);
+    motorRear.motorRev(spd);
 }
 
 void setupBL() {

@@ -25,6 +25,8 @@ Esp32 2WD Car with Bluetooth Remote Control is an project that can avoid obstacl
 - **Hot glued**: For connection the wires/devices/motors with others components we used this project.
 - **Soldering iron**: For connection the wires with others components we used this board.
 
+- **2x 1N4007 Flyback Diodes**: One per motor, soldered in parallel (reverse-biased) across the motor terminals. They protect the MX1508 and the ESP32 from back-EMF voltage spikes generated when the motors brake or reverse direction.
+
 ## Following Hardware Steps
 
 1. I had an old toy car. We connected them using the screw provided with the chassis. Glue gun can be used to attach the motors to the base.
@@ -44,7 +46,7 @@ Esp32 2WD Car with Bluetooth Remote Control is an project that can avoid obstacl
 
 
 
-3. And repeated the process for the right motors and connected them to "out3" and "out4" of the motor driver.
+3. And repeated the process for the rear motor and connected it to "out3" and "out4" of the motor driver.
 
 4. After that we connected the two 18650 batteries in series through the HX-2S-A10 BMS (output ~8.4V). The BMS output goes to the motor driver positive terminal (12V marked port) to power the motors directly. We also connected the BMS output to a DC-DC buck step-down module that converts 8.4V to 5V. The 5V output from the buck module powers the ESP32 and other logic components. All grounds (battery/BMS, buck module, motor driver, ESP32) are connected together.
 
@@ -55,7 +57,8 @@ Esp32 2WD Car with Bluetooth Remote Control is an project that can avoid obstacl
 7. Install the Ultrasonic Sensor connect the GND to esp32 GND, VCC to 5V esp32, trig to D5 on esp32 and trigP to D18 on esp32.
 
 8.  Install the Led 5V device with GND to esp32 GND, VCC  to D19 on esp32.
-9. 
+
+9. Solder a **1N4007 flyback diode** in parallel across each motor terminals (reverse-biased: cathode/band side to the positive terminal, anode to the negative terminal). The MX1508 does not have built-in flyback diodes, so these protect the driver and the ESP32 from voltage spikes caused by back-EMF when the motors stop or change direction.
 
 
 ## Circuit Diagram
@@ -75,8 +78,15 @@ flowchart TD
         ESP["ESP32-C3\nWaveshare S3-Zero\n5V/VIN"]
     end
 
-    MOTOR_L["Left Motor\nOUT1 / OUT2"]
-    MOTOR_R["Right Motor\nOUT3 / OUT4"]
+    subgraph FRONT_MOTOR ["Front Motor Group"]
+        MOTOR_F["Front Motor\nOUT1 / OUT2"]
+        DIODE_F["1N4007 Flyback Diode\nCathode to OUT1 / Anode to OUT2"]
+    end
+
+    subgraph REAR_MOTOR ["Rear Motor Group"]
+        MOTOR_R["Rear Motor\nOUT3 / OUT4"]
+        DIODE_R["1N4007 Flyback Diode\nCathode to OUT3 / Anode to OUT4"]
+    end
 
     BAT -->|"B+ / B-"| BMS
     BMS -->|"OUT+ / OUT-"| SW
@@ -87,28 +97,35 @@ flowchart TD
     ESP -->|"GPIO 26/27\nPWM CH0/CH1"| MOTOR_DRV
     ESP -->|"GPIO 13/12\nPWM CH2/CH3"| MOTOR_DRV
 
-    MOTOR_DRV --> MOTOR_L
-    MOTOR_DRV --> MOTOR_R
+    MOTOR_DRV -->|"OUT1 / OUT2"| MOTOR_F
+    MOTOR_DRV -->|"OUT3 / OUT4"| MOTOR_R
+
+    DIODE_F -.-|"parallel\nreverse-biased"| MOTOR_F
+    DIODE_R -.-|"parallel\nreverse-biased"| MOTOR_R
 
     style BAT fill:#f9f,stroke:#333
     style BMS fill:#ffa,stroke:#333
     style BUCK fill:#aff,stroke:#333
     style ESP fill:#adf,stroke:#333
     style MOTOR_DRV fill:#fda,stroke:#333
-    style MOTOR_L fill:#ddd,stroke:#333
+    style MOTOR_F fill:#ddd,stroke:#333
     style MOTOR_R fill:#ddd,stroke:#333
+    style DIODE_F fill:#fcc,stroke:#c33
+    style DIODE_R fill:#fcc,stroke:#c33
     style POWER_8V fill:#fff3e0,stroke:#e65100
     style POWER_5V fill:#e3f2fd,stroke:#1565c0
+    style FRONT_MOTOR fill:#f5f5f5,stroke:#666
+    style REAR_MOTOR fill:#f5f5f5,stroke:#666
 ```
 
 > **Note:** GND is shared between all components (BMS, Buck Step-Down, MX1508, ESP32-C3).
 >
 > | ESP32 GPIO | MX1508 Pin | Function |
 > |---|---|---|
-> | GPIO 26 | IN1 | Left Motor Forward |
-> | GPIO 27 | IN2 | Left Motor Backward |
-> | GPIO 13 | IN3 | Right Motor Forward |
-> | GPIO 12 | IN4 | Right Motor Backward |
+> | GPIO 26 | IN1 | Front Motor Forward |
+> | GPIO 27 | IN2 | Front Motor Backward |
+> | GPIO 13 | IN3 | Rear Motor Forward |
+> | GPIO 12 | IN4 | Rear Motor Backward |
 
 <table>
   <tr valign="middle">
@@ -117,6 +134,10 @@ flowchart TD
       <div>
         <a href="https://app.cirkitdesigner.com/project/4d7fd9ed-47f0-43c8-8ef2-58eadbf371e6">circuit scheme link</a>
       </div>
+    </td>
+    <td halign="center">
+      <img src="./assets/circuit_with_diodes.svg" alt="circuit_diagram_with_flyback_diodes" height="450">
+      <div>Circuit with flyback diodes (1N4007)</div>
     </td>
   </tr>
 </table>
