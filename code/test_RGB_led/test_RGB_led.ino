@@ -25,6 +25,21 @@ void loop() {
   pixels.setPixelColor(0, pixels.Color(0, 0, 255));
   pixels.show();
   delay(500);
+  
+  // Arancione
+  pixels.setPixelColor(0, pixels.Color(255, 100, 0));
+  pixels.show();
+  delay(500);
+
+  // Giallo
+  pixels.setPixelColor(0, pixels.Color(255, 255, 0));
+  pixels.show();
+  delay(500);
+
+  // Celeste
+  pixels.setPixelColor(0, pixels.Color(0, 180, 255));
+  pixels.show();
+  delay(500);
 
   // Spento
   pixels.setPixelColor(0, pixels.Color(0, 0, 0));
