@@ -1,0 +1,372 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1400" font-family="ui-monospace, 'SF Mono', Menlo, monospace">
+  <defs>
+    <pattern id="holes" x="0" y="0" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect width="18" height="18" fill="#d4b483"/>
+      <circle cx="9" cy="9" r="2.2" fill="#3a2a18"/>
+      <circle cx="9" cy="9" r="1.3" fill="#9a7a4a"/>
+    </pattern>
+    <!-- Pattern lato saldature: rame chiaro -->
+    <pattern id="holesBottom" x="0" y="0" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect width="18" height="18" fill="#e8d4b0"/>
+      <circle cx="9" cy="9" r="3" fill="#b87a3a"/>
+      <circle cx="9" cy="9" r="2" fill="#5a3a1a"/>
+      <circle cx="9" cy="9" r="1" fill="#2a1a08"/>
+    </pattern>
+  </defs>
+
+  <rect width="900" height="1400" fill="#f5f1ea"/>
+
+  <text x="40" y="38" font-size="22" font-weight="700" fill="#1a1a1a">ESP32 2WD Car · Millefori 80×50 mm — Doppia vista</text>
+  <text x="40" y="60" font-size="12" fill="#555">Sopra: lato componenti · Sotto: lato saldature (specchiato orizzontalmente per riflettere come si vede in mano)</text>
+
+  <!-- ============================================================
+       VISTA 1: LATO COMPONENTI (TOP)
+       ============================================================ -->
+  <text x="40" y="98" font-size="16" font-weight="700" fill="#1a4d6e">① VISTA LATO COMPONENTI (top view)</text>
+  <text x="40" y="116" font-size="11" fill="#555">Quello che vedi guardando la piastra dall'alto, con i moduli inseriti</text>
+
+  <!-- Righello -->
+  <g font-size="9" fill="#666">
+    <text x="103" y="138">0</text>
+    <text x="283" y="138">2 cm</text>
+    <text x="463" y="138">4 cm</text>
+    <text x="643" y="138">6 cm</text>
+    <text x="823" y="138">8 cm</text>
+    <line x1="108" y1="142" x2="828" y2="142" stroke="#888" stroke-width="0.5"/>
+    <line x1="108" y1="140" x2="108" y2="144" stroke="#888"/>
+    <line x1="288" y1="140" x2="288" y2="144" stroke="#888"/>
+    <line x1="468" y1="140" x2="468" y2="144" stroke="#888"/>
+    <line x1="648" y1="140" x2="648" y2="144" stroke="#888"/>
+    <line x1="828" y1="140" x2="828" y2="144" stroke="#888"/>
+  </g>
+
+  <!-- Perfboard top -->
+  <rect x="99" y="153" width="738" height="348" fill="url(#holes)" stroke="#5a3a18" stroke-width="2.5" rx="4"/>
+  <circle cx="117" cy="171" r="5" fill="#f5f1ea" stroke="#5a3a18" stroke-width="1.5"/>
+  <circle cx="819" cy="171" r="5" fill="#f5f1ea" stroke="#5a3a18" stroke-width="1.5"/>
+  <circle cx="117" cy="483" r="5" fill="#f5f1ea" stroke="#5a3a18" stroke-width="1.5"/>
+  <circle cx="819" cy="483" r="5" fill="#f5f1ea" stroke="#5a3a18" stroke-width="1.5"/>
+
+  <!-- Bus indicativi (visti in trasparenza, in realtà stanno sotto) -->
+  <line x1="126" y1="198" x2="819" y2="198" stroke="#1a1a1a" stroke-width="3" opacity="0.25"/>
+  <text x="135" y="193" font-size="9" font-weight="700" fill="#1a1a1a" opacity="0.6">GND BUS (sotto)</text>
+  <line x1="540" y1="306" x2="819" y2="306" stroke="#c0392b" stroke-width="3" opacity="0.25"/>
+  <text x="545" y="301" font-size="9" font-weight="700" fill="#c0392b" opacity="0.6">+5V BUS (sotto)</text>
+  <line x1="324" y1="468" x2="558" y2="468" stroke="#e67e22" stroke-width="3" opacity="0.25"/>
+  <text x="333" y="463" font-size="9" font-weight="700" fill="#a04500" opacity="0.6">+8.4V BUS (sotto)</text>
+
+  <!-- BMS -->
+  <g>
+    <rect x="120" y="228" width="194" height="68" rx="3" fill="#2c5f3f" stroke="#1a3a25" stroke-width="2"/>
+    <text x="217" y="252" font-size="13" fill="#fff" text-anchor="middle" font-weight="700">HX-2S-A10  BMS 2S</text>
+    <text x="217" y="268" font-size="10" fill="#d0e0d5" text-anchor="middle">su strip femmina</text>
+    <rect x="115" y="232" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="108" y="239" font-size="8" text-anchor="end" fill="#a04500">B+</text>
+    <rect x="115" y="256" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="108" y="263" font-size="8" text-anchor="end" fill="#888">BM</text>
+    <rect x="115" y="280" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="108" y="287" font-size="8" text-anchor="end" fill="#1a1a1a">B−</text>
+    <rect x="309" y="244" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="326" y="251" font-size="8" fill="#a04500">P+</text>
+    <rect x="309" y="268" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="326" y="275" font-size="8" fill="#1a1a1a">P−</text>
+  </g>
+
+  <!-- Switch -->
+  <g>
+    <rect x="356" y="234" width="78" height="42" rx="3" fill="#7a7a7a" stroke="#222" stroke-width="1.5"/>
+    <text x="395" y="252" font-size="10" fill="#fff" text-anchor="middle" font-weight="700">SW</text>
+    <text x="395" y="266" font-size="9" fill="#fff" text-anchor="middle">ON/OFF</text>
+    <rect x="362" y="276" width="6" height="10" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <rect x="392" y="276" width="6" height="10" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <rect x="422" y="276" width="6" height="10" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+  </g>
+
+  <!-- MX1508 -->
+  <g>
+    <rect x="120" y="354" width="126" height="90" rx="3" fill="#1a3a55" stroke="#0a1f30" stroke-width="2"/>
+    <text x="183" y="378" font-size="13" fill="#fff" text-anchor="middle" font-weight="700">MX1508</text>
+    <text x="183" y="394" font-size="10" fill="#cfe0f0" text-anchor="middle">Motor Driver</text>
+    <rect x="115" y="360" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="108" y="367" font-size="8" text-anchor="end" fill="#a04500">VCC</text>
+    <rect x="115" y="400" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="108" y="407" font-size="8" text-anchor="end" fill="#1a1a1a">GND</text>
+    <rect x="241" y="360" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="258" y="367" font-size="8" fill="#3498db">IN1</text>
+    <rect x="241" y="378" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="258" y="385" font-size="8" fill="#9b59b6">IN2</text>
+    <rect x="241" y="396" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="258" y="403" font-size="8" fill="#16a085">IN3</text>
+    <rect x="241" y="414" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="258" y="421" font-size="8" fill="#d35400">IN4</text>
+    <rect x="138" y="440" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="143" y="459" font-size="8" text-anchor="middle">O1</text>
+    <rect x="156" y="440" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="161" y="459" font-size="8" text-anchor="middle">O2</text>
+    <rect x="200" y="440" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="205" y="459" font-size="8" text-anchor="middle">O3</text>
+    <rect x="218" y="440" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="223" y="459" font-size="8" text-anchor="middle">O4</text>
+  </g>
+
+  <!-- BUCK -->
+  <g>
+    <rect x="426" y="354" width="126" height="90" rx="3" fill="#1a4d6e" stroke="#0f2d40" stroke-width="2"/>
+    <text x="489" y="378" font-size="13" fill="#fff" text-anchor="middle" font-weight="700">DC-DC</text>
+    <text x="489" y="394" font-size="11" fill="#cfe6f5" text-anchor="middle">8.4V→5V</text>
+    <circle cx="450" cy="420" r="6" fill="#d4af37" stroke="#000"/>
+    <text x="450" y="434" font-size="7" text-anchor="middle" fill="#fff">ADJ</text>
+    <rect x="421" y="360" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="414" y="367" font-size="8" text-anchor="end" fill="#a04500">IN+</text>
+    <rect x="421" y="378" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="414" y="385" font-size="8" text-anchor="end">IN−</text>
+    <rect x="547" y="360" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="564" y="367" font-size="8" fill="#c0392b">O+</text>
+    <rect x="547" y="378" width="10" height="8" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    <text x="564" y="385" font-size="8">O−</text>
+  </g>
+
+  <!-- ESP32 -->
+  <g>
+    <rect x="612" y="342" width="200" height="120" rx="4" fill="#0d0d0d" stroke="#000" stroke-width="2"/>
+    <rect x="618" y="348" width="188" height="22" fill="#2a2a2a"/>
+    <text x="712" y="364" font-size="11" fill="#cfd6dc" text-anchor="middle" font-weight="700">ESP32-C3 / S3-Zero</text>
+    <rect x="685" y="464" width="54" height="9" rx="2" fill="#9aa0a6" stroke="#222" stroke-width="0.5"/>
+    <text x="712" y="483" font-size="8" fill="#333" text-anchor="middle">USB-C</text>
+    <g font-size="9" fill="#fff">
+      <rect x="607" y="382" width="10" height="8" fill="#d4af37"/><text x="623" y="389">5V</text>
+      <rect x="607" y="396" width="10" height="8" fill="#d4af37"/><text x="623" y="403">GND</text>
+      <rect x="607" y="410" width="10" height="8" fill="#d4af37"/><text x="623" y="417" fill="#3498db">GP26</text>
+      <rect x="607" y="424" width="10" height="8" fill="#d4af37"/><text x="623" y="431" fill="#9b59b6">GP27</text>
+      <rect x="607" y="438" width="10" height="8" fill="#d4af37"/><text x="623" y="445" fill="#16a085">GP13</text>
+      <rect x="607" y="452" width="10" height="8" fill="#d4af37"/><text x="623" y="459" fill="#d35400">GP12</text>
+    </g>
+  </g>
+
+  <!-- Schottky -->
+  <g>
+    <rect x="558" y="310" width="14" height="42" rx="2" fill="#2a2a2a" stroke="#000" stroke-width="0.8"/>
+    <rect x="558" y="310" width="14" height="4" fill="#e6e6e6"/>
+    <text x="585" y="328" font-size="8" fill="#1a1a1a" font-weight="700">1N5817</text>
+    <text x="585" y="340" font-size="7" fill="#666">K↑</text>
+  </g>
+
+  <!-- Morsettiere -->
+  <g>
+    <rect x="120" y="162" width="78" height="22" rx="2" fill="#1a5e2a" stroke="#000" stroke-width="1.2"/>
+    <circle cx="135" cy="173" r="5" fill="#d4af37" stroke="#000"/>
+    <circle cx="159" cy="173" r="5" fill="#d4af37" stroke="#000"/>
+    <circle cx="183" cy="173" r="5" fill="#d4af37" stroke="#000"/>
+    <text x="135" y="160" font-size="8" text-anchor="middle" fill="#a04500" font-weight="700">B+</text>
+    <text x="159" y="160" font-size="8" text-anchor="middle" fill="#666" font-weight="700">BM</text>
+    <text x="183" y="160" font-size="8" text-anchor="middle" font-weight="700">B−</text>
+    <text x="232" y="178" font-size="9" fill="#333">→ celle 18650</text>
+  </g>
+
+  <g>
+    <rect x="120" y="510" width="60" height="28" rx="2" fill="#5e1a1a" stroke="#000" stroke-width="1.5"/>
+    <circle cx="135" cy="524" r="5" fill="#d4af37" stroke="#000"/>
+    <circle cx="165" cy="524" r="5" fill="#d4af37" stroke="#000"/>
+    <text x="150" y="552" font-size="9" text-anchor="middle" fill="#333">→ Motore FRONT</text>
+  </g>
+  <g>
+    <rect x="200" y="510" width="60" height="28" rx="2" fill="#5e1a1a" stroke="#000" stroke-width="1.5"/>
+    <circle cx="215" cy="524" r="5" fill="#d4af37" stroke="#000"/>
+    <circle cx="245" cy="524" r="5" fill="#d4af37" stroke="#000"/>
+    <text x="230" y="552" font-size="9" text-anchor="middle" fill="#333">→ Motore REAR</text>
+  </g>
+
+  <!-- ============================================================
+       VISTA 2: LATO SALDATURE (BOTTOM) - SPECCHIATO!
+       ============================================================ -->
+  <text x="40" y="640" font-size="16" font-weight="700" fill="#a04500">② VISTA LATO SALDATURE (bottom view, SPECCHIATA)</text>
+  <text x="40" y="658" font-size="11" fill="#555">Come la vedi quando giri la piastra per saldare. Sinistra ↔ destra invertite. Le sigle dei moduli sono in trasparenza per orientarti.</text>
+  <text x="40" y="676" font-size="10" fill="#a04500" font-weight="700">⚠ Attenzione: il pin "B+" del BMS che a sopra sta a sinistra, qui appare a destra (e così via per ogni componente)</text>
+
+  <!-- Righello -->
+  <g font-size="9" fill="#666">
+    <text x="103" y="708">0</text>
+    <text x="283" y="708">2 cm</text>
+    <text x="463" y="708">4 cm</text>
+    <text x="643" y="708">6 cm</text>
+    <text x="823" y="708">8 cm</text>
+    <line x1="108" y1="712" x2="828" y2="712" stroke="#888" stroke-width="0.5"/>
+    <line x1="108" y1="710" x2="108" y2="714" stroke="#888"/>
+    <line x1="288" y1="710" x2="288" y2="714" stroke="#888"/>
+    <line x1="468" y1="710" x2="468" y2="714" stroke="#888"/>
+    <line x1="648" y1="710" x2="648" y2="714" stroke="#888"/>
+    <line x1="828" y1="710" x2="828" y2="714" stroke="#888"/>
+  </g>
+
+  <!-- Perfboard bottom (rame) - SPECCHIATA -->
+  <g transform="translate(927, 723) scale(-1, 1)">
+    <rect x="99" y="0" width="738" height="348" fill="url(#holesBottom)" stroke="#5a3a18" stroke-width="2.5" rx="4"/>
+    <circle cx="117" cy="18" r="5" fill="#f5f1ea" stroke="#5a3a18" stroke-width="1.5"/>
+    <circle cx="819" cy="18" r="5" fill="#f5f1ea" stroke="#5a3a18" stroke-width="1.5"/>
+    <circle cx="117" cy="330" r="5" fill="#f5f1ea" stroke="#5a3a18" stroke-width="1.5"/>
+    <circle cx="819" cy="330" r="5" fill="#f5f1ea" stroke="#5a3a18" stroke-width="1.5"/>
+
+    <!-- BUS sotto (questi qui sono solidi, perché siamo dal lato dove vivono) -->
+    <line x1="126" y1="45" x2="819" y2="45" stroke="#1a1a1a" stroke-width="4"/>
+    <line x1="540" y1="153" x2="819" y2="153" stroke="#c0392b" stroke-width="4"/>
+    <line x1="324" y1="315" x2="558" y2="315" stroke="#e67e22" stroke-width="4"/>
+
+    <!-- Pad delle saldature: cerchietti chiari sopra il rame nero -->
+    <!-- BMS pads (specchiati: B+ ora a destra, P+ a sx) -->
+    <g>
+      <circle cx="115" cy="79" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="115" cy="103" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="115" cy="127" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="319" cy="91" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="319" cy="115" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    </g>
+    <!-- Switch pads -->
+    <g>
+      <circle cx="365" cy="128" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="395" cy="128" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="425" cy="128" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    </g>
+    <!-- MX1508 pads -->
+    <g>
+      <circle cx="115" cy="207" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="115" cy="247" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="251" cy="207" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="251" cy="225" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="251" cy="243" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="251" cy="261" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="143" cy="293" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="161" cy="293" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="205" cy="293" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="223" cy="293" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    </g>
+    <!-- BUCK pads -->
+    <g>
+      <circle cx="421" cy="207" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="421" cy="225" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="557" cy="207" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="557" cy="225" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    </g>
+    <!-- ESP32 pads (lato sinistro nel top → lato destro qui sotto) -->
+    <g>
+      <circle cx="617" cy="231" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="617" cy="245" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="617" cy="259" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="617" cy="273" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="617" cy="287" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="617" cy="301" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    </g>
+    <!-- Schottky pads -->
+    <g>
+      <circle cx="565" cy="155" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+      <circle cx="565" cy="197" r="3.5" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/>
+    </g>
+    <!-- Morsettiera batterie -->
+    <g>
+      <circle cx="135" cy="20" r="4" fill="#d4af37" stroke="#000"/>
+      <circle cx="159" cy="20" r="4" fill="#d4af37" stroke="#000"/>
+      <circle cx="183" cy="20" r="4" fill="#d4af37" stroke="#000"/>
+    </g>
+    <!-- Morsettiere motori -->
+    <g>
+      <circle cx="135" cy="371" r="4" fill="#d4af37" stroke="#000"/>
+      <circle cx="165" cy="371" r="4" fill="#d4af37" stroke="#000"/>
+      <circle cx="215" cy="371" r="4" fill="#d4af37" stroke="#000"/>
+      <circle cx="245" cy="371" r="4" fill="#d4af37" stroke="#000"/>
+    </g>
+
+    <!-- =========== TRACCE / PONTICELLI =========== -->
+    <g fill="none" stroke-linecap="round">
+      <!-- Morsettiera batterie → BMS B+/BM/B− -->
+      <path d="M135,20 V 79 H 115" stroke="#a04500" stroke-width="2.2"/>
+      <path d="M159,20 V 60 H 100 V 103 H 115" stroke="#888" stroke-width="2" stroke-dasharray="3 3"/>
+      <path d="M183,20 V 127 H 115" stroke="#1a1a1a" stroke-width="2.2"/>
+
+      <!-- BMS P+ → switch (centro) -->
+      <path d="M319,91 H 395 V 128" stroke="#a04500" stroke-width="2.5"/>
+      <!-- Switch comune (uno dei laterali) → +8.4V bus -->
+      <path d="M365,128 V 315" stroke="#e67e22" stroke-width="2.5"/>
+      <!-- BMS P− → GND bus -->
+      <path d="M319,115 H 340 V 45" stroke="#1a1a1a" stroke-width="2.2"/>
+
+      <!-- +8.4V → MX1508 VCC -->
+      <path d="M324,315 V 207 H 115" stroke="#e67e22" stroke-width="2.2"/>
+      <!-- GND → MX1508 GND -->
+      <path d="M270,45 V 247 H 115" stroke="#1a1a1a" stroke-width="2"/>
+
+      <!-- +8.4V → Buck IN+ -->
+      <path d="M450,315 V 207 H 421" stroke="#e67e22" stroke-width="2.2"/>
+      <!-- GND → Buck IN− -->
+      <path d="M408,45 V 225 H 421" stroke="#1a1a1a" stroke-width="2"/>
+
+      <!-- Buck OUT+ → Schottky A → +5V bus -->
+      <path d="M557,207 H 565 V 197" stroke="#c0392b" stroke-width="2"/>
+      <path d="M565,155 V 153" stroke="#c0392b" stroke-width="2"/>
+      <circle cx="565" cy="153" r="3" fill="#c0392b"/>
+      <!-- Buck OUT− → GND bus -->
+      <path d="M557,225 H 600 V 45" stroke="#1a1a1a" stroke-width="2"/>
+
+      <!-- +5V → ESP32 5V -->
+      <path d="M620,153 V 231 H 617" stroke="#c0392b" stroke-width="2"/>
+      <circle cx="620" cy="153" r="3" fill="#c0392b"/>
+      <!-- GND → ESP32 GND -->
+      <path d="M650,45 V 245 H 617" stroke="#1a1a1a" stroke-width="2"/>
+
+      <!-- ESP32 GP → MX1508 INx -->
+      <path d="M617,259 H 288 V 207 H 251" stroke="#3498db" stroke-width="1.8"/>
+      <path d="M617,273 H 306 V 225 H 251" stroke="#9b59b6" stroke-width="1.8"/>
+      <path d="M617,287 H 324 V 243 H 251" stroke="#16a085" stroke-width="1.8"/>
+      <path d="M617,301 H 342 V 261 H 251" stroke="#d35400" stroke-width="1.8"/>
+
+      <!-- MX1508 OUT → motori -->
+      <path d="M143,293 V 371" stroke="#888" stroke-width="2"/>
+      <path d="M161,293 V 350 H 165 V 371" stroke="#888" stroke-width="2"/>
+      <path d="M205,293 V 350 H 215 V 371" stroke="#888" stroke-width="2"/>
+      <path d="M223,293 V 340 H 245 V 371" stroke="#888" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- Etichette dei moduli SOPRA la vista bottom (NON specchiate, per leggibilità).
+       Attenzione: la posizione è "specchiata" rispetto al top.
+       Top: BMS sx (x=120-314) → Bottom: BMS dx (x=613-807).
+       Top: ESP32 dx (x=612-812) → Bottom: ESP32 sx (x=115-315) -->
+  <g font-size="11" fill="#444" opacity="0.55" font-weight="700">
+    <text x="710" y="770" text-anchor="middle">[BMS HX-2S-A10]</text>
+    <text x="532" y="770" text-anchor="middle">[SW]</text>
+    <text x="744" y="900" text-anchor="middle">[MX1508]</text>
+    <text x="438" y="900" text-anchor="middle">[BUCK]</text>
+    <text x="215" y="900" text-anchor="middle">[ESP32]</text>
+    <text x="362" y="870" text-anchor="middle" font-size="9">[1N5817]</text>
+  </g>
+
+  <!-- ============================================================
+       LEGENDA + ISTRUZIONI
+       ============================================================ -->
+  <g transform="translate(40,1110)">
+    <rect width="820" height="270" fill="#fff" stroke="#bbb" rx="4"/>
+    <text x="14" y="22" font-size="13" font-weight="700" fill="#1a1a1a">Legenda colori cavi (saldati sotto la millefori)</text>
+    <g font-size="11" fill="#333">
+      <rect x="14" y="34" width="22" height="6" fill="#1a1a1a"/><text x="42" y="40">GND</text>
+      <rect x="100" y="34" width="22" height="6" fill="#c0392b"/><text x="128" y="40">+5V</text>
+      <rect x="186" y="34" width="22" height="6" fill="#e67e22"/><text x="214" y="40">+8.4V (post switch)</text>
+      <rect x="350" y="34" width="22" height="6" fill="#a04500"/><text x="378" y="40">+8.4V (pre switch)</text>
+      <rect x="510" y="34" width="22" height="6" fill="#3498db"/><text x="538" y="40">GP26</text>
+      <rect x="585" y="34" width="22" height="6" fill="#9b59b6"/><text x="613" y="40">GP27</text>
+      <rect x="660" y="34" width="22" height="6" fill="#16a085"/><text x="688" y="40">GP13</text>
+      <rect x="730" y="34" width="22" height="6" fill="#d35400"/><text x="758" y="40">GP12</text>
+    </g>
+
+    <text x="14" y="74" font-size="13" font-weight="700" fill="#1a1a1a">Come leggere le due viste</text>
+    <text x="14" y="92" font-size="10" fill="#444">• La vista ① è quello che vedi guardando la piastra dall'alto, con i moduli inseriti. I bus sono mostrati in trasparenza perché stanno fisicamente sotto.</text>
+    <text x="14" y="106" font-size="10" fill="#444">• La vista ② è la vista lato saldature. È l'immagine speculare della ①: quello che a sopra è a sinistra, qui sta a destra.</text>
+    <text x="14" y="120" font-size="10" fill="#444">• I tre cavi spessi orizzontali (nero/rosso/arancio) sono i bus principali, fatti con filo rigido nudo (es. spezzone di gamba di resistore).</text>
+    <text x="14" y="134" font-size="10" fill="#444">• Le linee colorate sottili sono cavetti isolati (wire wrap o filo da 0.3 mm) che corrono punto-a-punto sotto la piastra.</text>
+
+    <text x="14" y="160" font-size="13" font-weight="700" fill="#1a1a1a">Ordine di montaggio consigliato</text>
+    <text x="14" y="178" font-size="10" fill="#444">1) Salda gli strip header femmina dove vanno i moduli rimovibili (ESP32, BMS, Buck), così potrai toglierli per programmare/sostituire.</text>
+    <text x="14" y="192" font-size="10" fill="#444">2) Stendi i tre bus di alimentazione con filo rigido. Controlla con multimetro che non tocchino tracce vicine.</text>
+    <text x="14" y="206" font-size="10" fill="#444">3) Aggiungi le morsettiere a vite (batteria + 2 motori), lo switch e lo Schottky 1N5817 (banda/catodo verso il bus +5V).</text>
+    <text x="14" y="220" font-size="10" fill="#444">4) Cabla i segnali GPIO ESP32→MX1508 con i 4 cavetti colorati.</text>
+    <text x="14" y="234" font-size="10" fill="#444">5) PRIMA TEST: senza moduli inseriti, verifica con multimetro continuità su +8.4V/+5V/GND e assenza di corti.</text>
+    <text x="14" y="248" font-size="10" fill="#444">6) Inserisci i moduli, alimenta e misura la tensione del bus +5V con il trimmer del Buck. Solo dopo collega ESP32.</text>
+  </g>
+</svg>

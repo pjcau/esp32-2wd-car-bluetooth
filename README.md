@@ -222,4 +222,31 @@ B button → 'B'
    Select the correct port in **Tools → Port**, then compile and upload.
 
 
+## Perfboard Build Guide
+
+This section explains how to assemble all the components on an 80×50 mm perfboard (millefori). The SVG below shows two views of the same board:
+
+1. **Component side (top):** What you see looking at the board from above, with the modules inserted. The power buses are drawn semi-transparent because they physically run underneath.
+2. **Solder side (bottom):** The same board flipped horizontally — this is important because when you actually flip the board to solder, left and right are swapped. For example, the BMS "B+" pin that sits on the left in the top view will appear on the right when you're soldering.
+
+<img src="./assets/esp32-2wd-millefori.svg" alt="Perfboard layout — component side and solder side" width="100%">
+
+### Key Notes
+
+- **Use female pin headers** for the BMS, Buck converter, and ESP32 so they remain removable for programming or replacement.
+- The three thick horizontal lines (black/red/orange) on the solder side are the main power buses, made with rigid bare wire (e.g., cut resistor legs).
+- The thin colored lines are insulated point-to-point wires (wire-wrap or 0.3 mm wire) running under the board.
+
+### Recommended Assembly Order
+
+1. **Solder female pin headers** where the removable modules go (ESP32, BMS, Buck converter).
+2. **Lay out the three power buses** (GND, +5V, +8.4V) with rigid wire. Check with a multimeter that they don't touch nearby traces.
+3. **Add the screw terminals** (battery + 2 motors), the ON/OFF switch, and the 1N5817 Schottky diode (band/cathode side toward the +5V bus).
+4. **Wire the GPIO signals** from ESP32 to MX1508 with the 4 colored wires (GP26→IN1, GP27→IN2, GP13→IN3, GP12→IN4).
+5. **Test before inserting any module:** use a multimeter to verify continuity on +8.4V / +5V / GND and make sure there are no shorts between buses.
+6. **Insert the modules**, power on, and measure the +5V bus voltage using the Buck converter's trimmer potentiometer. Only after confirming correct voltage, plug in the ESP32.
+
+> **Tip:** If you need exact hole-to-hole distances for positioning the female headers, or a separate wiring-only diagram for the buses, feel free to ask.
+
+
 ## Pictures and Videos
