@@ -1,48 +1,42 @@
-#include <Adafruit_NeoPixel.h>
+#include <Arduino.h>
 
-#define PIN_LED    21   // GPIO collegato al WS2812
-#define NUM_PIXELS 1    // Solo 1 LED RGB integrato
+#define PIN_LED 8   // LED blu integrato sul Super Mini (attivo basso)
 
-Adafruit_NeoPixel pixels(NUM_PIXELS, PIN_LED, NEO_GRB + NEO_KHZ800);
+static inline void ledOn()  { digitalWrite(PIN_LED, LOW); }
+static inline void ledOff() { digitalWrite(PIN_LED, HIGH); }
 
 void setup() {
-  pixels.begin();  // Inizializza il LED
-  pixels.setBrightness(50);  // Da 0 a 255
+  pinMode(PIN_LED, OUTPUT);
+  ledOff();
 }
 
 void loop() {
-  // Rosso
-  pixels.setPixelColor(0, pixels.Color(255, 0, 0));
-  pixels.show();
-  delay(500);
+  // Tre blink lenti
+  for (int i = 0; i < 3; i++) {
+    ledOn();
+    delay(500);
+    ledOff();
+    delay(500);
+  }
 
-  // Verde
-  pixels.setPixelColor(0, pixels.Color(0, 255, 0));
-  pixels.show();
-  delay(500);
+  // Cinque blink veloci
+  for (int i = 0; i < 5; i++) {
+    ledOn();
+    delay(100);
+    ledOff();
+    delay(100);
+  }
 
-  // Blu
-  pixels.setPixelColor(0, pixels.Color(0, 0, 255));
-  pixels.show();
-  delay(500);
-  
-  // Arancione
-  pixels.setPixelColor(0, pixels.Color(255, 100, 0));
-  pixels.show();
-  delay(500);
+  // Fade in / fade out (PWM, attivo basso → invertiamo il duty)
+  for (int v = 0; v <= 255; v += 5) {
+    analogWrite(PIN_LED, 255 - v);
+    delay(15);
+  }
+  for (int v = 255; v >= 0; v -= 5) {
+    analogWrite(PIN_LED, 255 - v);
+    delay(15);
+  }
 
-  // Giallo
-  pixels.setPixelColor(0, pixels.Color(255, 255, 0));
-  pixels.show();
-  delay(500);
-
-  // Celeste
-  pixels.setPixelColor(0, pixels.Color(0, 180, 255));
-  pixels.show();
-  delay(500);
-
-  // Spento
-  pixels.setPixelColor(0, pixels.Color(0, 0, 0));
-  pixels.show();
+  ledOff();
   delay(500);
 }

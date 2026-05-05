@@ -1,13 +1,16 @@
 #include <Bluepad32.h>
 #include <ESP32MX1508.h>
 
+// ESP32-C3 Super Mini — pin sul lato di GPIO21 (opposto a 5V/GND).
+// Evitiamo GPIO8 (LED integrato, strapping) e GPIO9 (BOOT, strapping).
+
 // Motor A (Front) pins
-#define FRONT_FWD  26
-#define FRONT_BWD  27
+#define FRONT_FWD  5
+#define FRONT_BWD  6
 
 // Motor B (Rear) pins
-#define REAR_FWD 13
-#define REAR_BWD 12
+#define REAR_FWD 7
+#define REAR_BWD 10
 
 // PWM channels (each pin needs its own channel)
 #define CH_LF 0
