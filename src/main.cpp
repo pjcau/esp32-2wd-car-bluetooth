@@ -1,42 +1,167 @@
 #include <Arduino.h>
+#include <ESP32MX1508.h>
 
-#define PIN_LED 8   // LED blu integrato sul Super Mini (attivo basso)
+// Metti a 1 per riattivare il gamepad Bluetooth (richiede setup Bluepad32 dedicato).
+#define USE_BLUEPAD32 1
 
-static inline void ledOn()  { digitalWrite(PIN_LED, LOW); }
-static inline void ledOff() { digitalWrite(PIN_LED, HIGH); }
+#if USE_BLUEPAD32
+#include <Bluepad32.h>
+#endif
 
-void setup() {
-  pinMode(PIN_LED, OUTPUT);
-  ledOff();
+// ESP32-C3 Super Mini — pin sul lato di GPIO21 (opposto a 5V/GND).
+// Evitiamo GPIO8 (LED integrato, strapping) e GPIO9 (BOOT, strapping).
+
+// Motor A (Front) pins
+#define FRONT_FWD 5
+#define FRONT_BWD 6
+
+// Motor B (Rear) pins
+#define REAR_FWD 7
+#define REAR_BWD 10
+
+// PWM channels (each pin needs its own channel)
+#define CH_LF 0
+#define CH_LB 1
+#define CH_RF 2
+#define CH_RB 3
+
+#define RES 8     // Resolution: 8 bit (0-255)
+#define FREQ 5000 // PWM Frequency in Hz
+
+MX1508 motorFront(FRONT_FWD, FRONT_BWD, CH_LF, CH_LB, RES, FREQ);
+MX1508 motorRear(REAR_FWD, REAR_BWD, CH_RF, CH_RB, RES, FREQ);
+
+int speed = 200;
+
+#if USE_BLUEPAD32
+ControllerPtr myControllers[BP32_MAX_GAMEPADS];
+
+void onConnectedController(ControllerPtr ctl)
+{
+    bool foundEmptySlot = false;
+    for (int i = 0; i < BP32_MAX_GAMEPADS; i++)
+    {
+        if (myControllers[i] == nullptr)
+        {
+            Serial.printf("CALLBACK: Controller is connected, index=%d\n", i);
+            ControllerProperties properties = ctl->getProperties();
+            Serial.printf("Controller model: %s, VID=0x%04x, PID=0x%04x\n",
+                          ctl->getModelName().c_str(), properties.vendor_id, properties.product_id);
+            myControllers[i] = ctl;
+            foundEmptySlot = true;
+            break;
+        }
+    }
+    if (!foundEmptySlot)
+    {
+        Serial.println("CALLBACK: Controller connected, but could not find empty slot");
+    }
 }
 
-void loop() {
-  // Tre blink lenti
-  for (int i = 0; i < 3; i++) {
-    ledOn();
-    delay(500);
-    ledOff();
-    delay(500);
-  }
+void onDisconnectedController(ControllerPtr ctl)
+{
+    for (int i = 0; i < BP32_MAX_GAMEPADS; i++)
+    {
+        if (myControllers[i] == ctl)
+        {
+            Serial.printf("CALLBACK: Controller disconnected from index=%d\n", i);
+            myControllers[i] = nullptr;
+            break;
+        }
+    }
+}
+#endif // USE_BLUEPAD32
 
-  // Cinque blink veloci
-  for (int i = 0; i < 5; i++) {
-    ledOn();
-    delay(100);
-    ledOff();
-    delay(100);
-  }
+void stopAll()
+{
+    motorFront.motorBrake();
+    motorRear.motorBrake();
+}
 
-  // Fade in / fade out (PWM, attivo basso → invertiamo il duty)
-  for (int v = 0; v <= 255; v += 5) {
-    analogWrite(PIN_LED, 255 - v);
-    delay(15);
-  }
-  for (int v = 255; v >= 0; v -= 5) {
-    analogWrite(PIN_LED, 255 - v);
-    delay(15);
-  }
+void goForward(int spd)
+{
+    motorFront.motorGo(spd);
+    motorRear.motorGo(spd);
+}
 
-  ledOff();
-  delay(500);
+void goBackward(int spd)
+{
+    motorFront.motorRev(spd);
+    motorRear.motorRev(spd);
+}
+
+void turnLeft(int spd)
+{
+    motorFront.motorRev(spd);
+    motorRear.motorGo(spd);
+}
+
+void turnRight(int spd)
+{
+    motorFront.motorGo(spd);
+    motorRear.motorRev(spd);
+}
+
+#if USE_BLUEPAD32
+void setupBL()
+{
+    Serial.printf("Firmware: %s\n", BP32.firmwareVersion());
+    const uint8_t *addr = BP32.localBdAddress();
+    Serial.printf("BD Addr: %2X:%2X:%2X:%2X:%2X:%2X\n",
+                  addr[0], addr[1], addr[2], addr[3], addr[4], addr[5]);
+    BP32.setup(&onConnectedController, &onDisconnectedController);
+}
+#endif
+
+void setup()
+{
+    Serial.begin(115200);
+#if USE_BLUEPAD32
+    setupBL();
+#endif
+}
+
+void loop()
+{
+#if USE_BLUEPAD32
+    bool dataUpdated = BP32.update();
+    if (!dataUpdated)
+        return;
+
+    ControllerPtr ctl = myControllers[0];
+    if (ctl == nullptr)
+        return;
+
+    if (ctl->b())
+    {
+        stopAll();
+        Serial.println("STOP");
+    }
+    else if (ctl->dpad() == 0x01)
+    {
+        goForward(speed);
+        Serial.println("FORWARD");
+    }
+    else if (ctl->dpad() == 0x02)
+    {
+        goBackward(speed);
+        Serial.println("BACKWARD");
+    }
+    else if (ctl->dpad() == 0x08)
+    {
+        turnLeft(speed);
+        Serial.println("LEFT");
+    }
+    else if (ctl->dpad() == 0x04)
+    {
+        turnRight(speed);
+        Serial.println("RIGHT");
+    }
+    else if (ctl->dpad() == 0x00)
+    {
+        stopAll();
+    }
+
+    delay(150);
+#endif // USE_BLUEPAD32
 }
